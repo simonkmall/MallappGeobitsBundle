@@ -1,0 +1,3 @@
+mallapp_geobits_homepage:
+    path:     /
+    defaults: { _controller: MallappGeobitsBundle:Default:index }
