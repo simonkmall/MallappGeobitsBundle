@@ -24,14 +24,31 @@
  * THE SOFTWARE.
  */
 
-namespace Mallapp\GeobitsBundle\Controller;
+namespace Mallapp\GeobitsBundle\Tests\Model;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Mallapp\GeobitsBundle\Model\CoordinateCircle;
+use Mallapp\GeobitsBundle\Model\Coordinate;
 
-class DefaultController extends Controller
-{
-    public function indexAction()
-    {
-        return $this->render('MallappGeobitsBundle:Default:index.html.twig');
+
+/**
+ * Description of CoordinateCircleTest
+ *
+ * @author Simon Mall
+ */
+class CoordinateCircleTest extends \PHPUnit_Framework_TestCase {
+
+    public function testObject() {
+
+        $circleSmall = new CoordinateCircle(47.379274, 8.512315, 1930.0);
+        $circleBig = new CoordinateCircle(47.379274, 8.512315, 1950.0);
+        
+        $point = new Coordinate(47.368778, 8.532750);
+        
+        $this->assertFalse($circleSmall->containsCoordinate($point));
+        
+        $this->assertTrue($circleBig->containsCoordinate($point));
+        
+ 
     }
+
 }
