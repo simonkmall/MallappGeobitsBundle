@@ -67,6 +67,12 @@ class CoordinateCircle {
         
     }   
     
+    public function getBoundingBox() {
+        
+        return $this->center->boundingBox($this->radius);
+        
+    }
+    
     private function sanitizeRadius($radius) {
         
         if (!is_numeric($radius)) {

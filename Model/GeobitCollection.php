@@ -41,6 +41,30 @@ use Doctrine\Common\Persistence\ObjectManager;
 class GeobitCollection {
     
     
+    public static function getGeobitsInCircle(CoordinateCircle $circle, 
+            $cached, $userToken, EntityRepository $geobitsRepo, 
+            EntityRepository $retrievalsRepo, ObjectManager $em) {
+    
+        $candidates = $this->getGeobitsInBoundingBox($circle->getBoundingBox(), 
+                $cached, $userToken, $geobitsRepo, $retrievalsRepo, $em);
+        
+        $containedInCircle = Array();
+        
+        foreach ($candidates as $candidate) {
+            
+            if ($circle->containsCoordinate(new Coordinate($candidate->latitude, $candidate->longitude))) {
+                
+                $containedInCircle[] = $candidate;
+                
+            }
+            
+        }
+        
+        return $containedInCircle;
+        
+    }
+    
+    
     public static function getGeobitsInBoundingBox(CoordinateBox $boundingBox,
             $cached, $userToken, EntityRepository $geobitsRepo, 
             EntityRepository $retrievalsRepo, ObjectManager $em) {
