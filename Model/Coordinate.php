@@ -33,11 +33,17 @@ namespace Mallapp\GeobitsBundle\Model;
  */
 class Coordinate {
     
-    private static $earthRadiusInMeters = 6371000.0;
-    private static $minLatRad = -M_PI / 2.0;
-    private static $maxLatRad = M_PI / 2.0;
-    private static $minLongRad = -M_PI;
-    private static $maxLongRad = M_PI;
+    public static $earthRadiusInMeters = 6371000.0;
+    public static $minLatRad = -M_PI / 2.0;
+    public static $maxLatRad = M_PI / 2.0;
+    public static $minLongRad = -M_PI;
+    public static $maxLongRad = M_PI;
+    
+    public static $minLat = -90.0;
+    public static $maxLat = 90.0;
+    public static $minLong = -180.0;
+    public static $maxLong = 180.0;
+    
     
     
     private $latitude;
@@ -70,17 +76,17 @@ class Coordinate {
             
         }
         
-        if ($latitude > 90.0) {
+        if ($latitude > self::$maxLat) {
             
-            $this->latitude = 90.0;
+            $this->latitude = self::$maxLat;
             
             return false;
             
         }
         
-        if ($latitude < -90.0) {
+        if ($latitude < self::$minLat) {
             
-            $this->latitude = -90.0;
+            $this->latitude = self::$minLat;
             
             return false;
             
@@ -102,17 +108,17 @@ class Coordinate {
             
         }
         
-        if ($longitude >= 180.0) {
+        if ($longitude > self::$maxLong) {
             
-            $this->longitude = 179.99;
+            $this->longitude = self::$maxLong;
             
             return false;
             
         }
         
-        if ($longitude <= -180.0) {
+        if ($longitude < self::$minLong) {
             
-            $this->longitude = -179.99;
+            $this->longitude = self::$minLong;
             
             return false;
             

@@ -46,12 +46,12 @@ class CoordinateTest extends \PHPUnit_Framework_TestCase {
         $coord1 = new Coordinate(-2000.0, -2000.0);
         
         $this->assertEquals($coord1->getLatitude(), -90.0);
-        $this->assertEquals($coord1->getLongitude(), -179.99);
+        $this->assertEquals($coord1->getLongitude(), -180.0);
         
         $coord2 = new Coordinate(2000.0, 2000.0);
         
         $this->assertEquals($coord2->getLatitude(), 90.0);
-        $this->assertEquals($coord2->getLongitude(), 179.99);       
+        $this->assertEquals($coord2->getLongitude(), 180.0);       
         
         // Test correct
         $coord3 = new Coordinate(12.3, -45.0);
