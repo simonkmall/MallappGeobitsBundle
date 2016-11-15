@@ -81,6 +81,16 @@ class Geobit
     private $active;
 
 
+    public function getAsArray() {
+        
+        $returnArray = Array();
+        
+        $returnArray['id'] = $this->id;
+        $returnArray['latitude'] = $this->latitude;
+        $returnArray['longitude'] = $this->longitude;
+
+    }
+
     /**
      * Get id
      *
