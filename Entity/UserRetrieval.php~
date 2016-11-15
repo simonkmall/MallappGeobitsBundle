@@ -124,28 +124,5 @@ class UserRetrieval
     {
         return $this->retrievedBy;
     }
-
-    /**
-     * Set parcelId
-     *
-     * @param string $parcelId
-     *
-     * @return UserRetrieval
-     */
-    public function setParcelId($parcelId)
-    {
-        $this->parcelId = $parcelId;
-
-        return $this;
-    }
-
-    /**
-     * Get parcelId
-     *
-     * @return string
-     */
-    public function getParcelId()
-    {
-        return $this->parcelId;
-    }
 }
+
