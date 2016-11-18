@@ -273,6 +273,8 @@ class GeobitInterfaceTest extends KernelTestCase {
     {
         parent::tearDown();
 
+        $this->em->createQuery('DELETE FROM MallappGeobitsBundle:Geobit')->execute();
+        $this->em->createQuery('DELETE FROM MallappGeobitsBundle:UserRetrieval')->execute();
         $this->em->close();
         $this->em = null; // avoid memory leaks
     }
