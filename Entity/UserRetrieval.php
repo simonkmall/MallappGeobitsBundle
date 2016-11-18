@@ -62,7 +62,7 @@ class UserRetrieval
     /**
      * @var string
      *
-     * @ORM\Column(name="retrieved_by", type="string", length=255, unique=true)
+     * @ORM\Column(name="retrieved_by", type="string", length=255, unique=false)
      */
     private $retrievedBy;
 

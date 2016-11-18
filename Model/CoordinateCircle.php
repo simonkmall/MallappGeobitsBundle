@@ -37,6 +37,12 @@ class CoordinateCircle {
     
     private $radius;
     
+    /**
+     * 
+     * @param type $latitude
+     * @param type $longitude
+     * @param type $radius Radius in m
+     */
     public function __construct($latitude, $longitude, $radius) {
         
         $this->center = new Coordinate($latitude, $longitude);

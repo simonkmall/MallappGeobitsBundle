@@ -111,6 +111,8 @@ class Geobit
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
+        
+        $this->changedAt = new \DateTime();
 
         return $this;
     }
@@ -135,6 +137,8 @@ class Geobit
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
+        
+        $this->changedAt = new \DateTime();
 
         return $this;
     }
@@ -207,6 +211,8 @@ class Geobit
     public function setActive($active)
     {
         $this->active = $active;
+        
+        $this->changedAt = new \DateTime();
 
         return $this;
     }

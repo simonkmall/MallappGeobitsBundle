@@ -26,6 +26,11 @@
 
 namespace Mallapp\GeobitsBundle\Model;
 
+use Mallapp\GeobitsBundle\Entity\UserRetrieval;
+
+use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * Description of GeobitSyncCache
  *
@@ -66,7 +71,7 @@ class GeobitSyncCache {
             
             // Append all geobits changed after that date to the array
             
-            $this->getGeobitsWithinBoxChangedLaterThan($syncGridElement->getCoordinateBox(), $retrieveAllSince, &$arrayOfAllGeobits);
+            $this->getGeobitsWithinBoxChangedLaterThan($syncGridElement->getCoordinateBox(), $retrieveAllSince, $arrayOfAllGeobits);
             
         }
 
@@ -188,18 +193,22 @@ class GeobitSyncCache {
             
         }
                 
-        $query->add('where', $query->expr()->gte(
+        $query->andWhere($query->expr()->gte(
                     'd.changedAt',
                     ':lastRetrieved'
-                    ))
-            ->setParameter('lastRetrieved', $changedAfter)
+                    ));
+        
+        $query->setParameter('lastRetrieved', $changedAfter)
             ->setParameter('NWLong', $boundingBox->getNorthWest()->getLongitude())
             ->setParameter('SELong', $boundingBox->getSouthEast()->getLongitude())
             ->setParameter('NWLat', $boundingBox->getNorthWest()->getLatitude())
-            ->setParameter('SELat', $boundingBox->getSouthEast()->getLatitude())
-            ->getQuery();
+            ->setParameter('SELat', $boundingBox->getSouthEast()->getLatitude());
         
-        return $query->getResult();
+        foreach($query->getQuery()->getResult() as $oneElement) {
+            
+            $resultArray[] = $oneElement;
+            
+        }
         
     }
 

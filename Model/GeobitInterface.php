@@ -122,7 +122,7 @@ class GeobitInterface {
         
         foreach ($candidates as $candidate) {
             
-            if ($circle->containsCoordinate(new Coordinate($candidate->latitude, $candidate->longitude))) {
+            if ($circle->containsCoordinate(new Coordinate($candidate->getLatitude(), $candidate->getLongitude()))) {
                 
                 $containedInCircle[] = $candidate;
                 
