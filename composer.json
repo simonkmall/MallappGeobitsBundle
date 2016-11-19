@@ -1,0 +1,32 @@
+{
+    "name" : "mallapp/geobitsbundle",
+    "description" : "A bundle to store and retrieve geolocation objects",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Simon Mall",
+        "email" : "simon@mallapp.ch"
+    }],
+    "keywords" : [
+        "geolocation symfony"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6"
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Mallapp\\GeobitsBundle" : ""
+        }
+    },
+    "target-dir" : "Mallapp/GeobitsBundle",
+    "repositories" : [{
+    }],
+    "extra" : {
+    "branch-alias" : {
+            "dev-master" : "0.1-dev"
+        }
+    }
+}
