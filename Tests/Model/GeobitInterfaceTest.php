@@ -30,10 +30,7 @@ use Mallapp\GeobitsBundle\Model\GeobitInterface;
 use Mallapp\GeobitsBundle\Model\CoordinateBox;
 use Mallapp\GeobitsBundle\Model\CoordinateCircle;
 
-
-
-use Mallapp\GeobitsBundle\Entity\Geobit;
-
+use Mallapp\GeobitsBundle\Entity\GeobitEntity;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Doctrine\ORM\Tools\SchemaTool;
@@ -79,19 +76,21 @@ class GeobitInterfaceTest extends KernelTestCase {
 
     public function testPutFunctions() {
 
-        $gb1 = new Geobit();
+        $gb1 = new GeobitEntity();
         $gb1->setLatitude(10.0);
         $gb1->setLongitude(30.0);
         $gb1->setActive(true);
+        $gb1->setComment("Test comment");
         
-        $gb2 = new Geobit();
+        $gb2 = new GeobitEntity();
         $gb2->setLatitude(20.0);
         $gb2->setLongitude(40.0);
         $gb2->setActive(true);
+        $gb2->setComment("Test comment");
         
         
         $gInterface = GeobitInterface::create(
-                $this->em->getRepository('MallappGeobitsBundle:Geobit'),
+                $this->em->getRepository('MallappGeobitsBundle:GeobitEntity'),
                 $this->em->getRepository('MallappGeobitsBundle:UserRetrieval'),
                 $this->em
                 );
@@ -100,17 +99,21 @@ class GeobitInterfaceTest extends KernelTestCase {
         $gInterface->put($gb2);
         $gInterface->flushDB();
         
-        $geobits = $this->em->getRepository('MallappGeobitsBundle:Geobit')->findAll();
+        $this->em->clear();
+        
+        $geobits = $this->em->getRepository('MallappGeobitsBundle:GeobitEntity')->findAll();
         
         $this->assertCount(2, $geobits);
+        
+        $this->assertEquals("Test comment", $geobits[0]->getComment());
         
         
         $gInterface->setActiveForGeobitArray($geobits, false);
         
         $gInterface->flushDB();
         
-        $inactiveGeobits = $this->em->getRepository('MallappGeobitsBundle:Geobit')->findByActive(false);
-        $activeGeobits = $this->em->getRepository('MallappGeobitsBundle:Geobit')->findByActive(true);
+        $inactiveGeobits = $this->em->getRepository('MallappGeobitsBundle:GeobitEntity')->findByActive(false);
+        $activeGeobits = $this->em->getRepository('MallappGeobitsBundle:GeobitEntity')->findByActive(true);
         
         $this->assertCount(2, $inactiveGeobits);
         $this->assertCount(0, $activeGeobits);
@@ -120,27 +123,27 @@ class GeobitInterfaceTest extends KernelTestCase {
     public function testRetrievalWithoutCache() {
         
         $gInterface = GeobitInterface::create(
-                $this->em->getRepository('MallappGeobitsBundle:Geobit'),
+                $this->em->getRepository('MallappGeobitsBundle:GeobitEntity'),
                 $this->em->getRepository('MallappGeobitsBundle:UserRetrieval'),
                 $this->em
                 );
                 
-        $gb1 = new Geobit();
+        $gb1 = new GeobitEntity();
         $gb1->setLatitude(47.15703);
         $gb1->setLongitude(8.25759);
         $gb1->setActive(true);
         
-        $gb2 = new Geobit();
+        $gb2 = new GeobitEntity();
         $gb2->setLatitude(47.10658);
         $gb2->setLongitude(8.17451);
         $gb2->setActive(true);
         
-        $gb3 = new Geobit();
+        $gb3 = new GeobitEntity();
         $gb3->setLatitude(47.09911);
         $gb3->setLongitude(8.25279);
         $gb3->setActive(true);
         
-        $gb4 = new Geobit();
+        $gb4 = new GeobitEntity();
         $gb4->setLatitude(48.00111);
         $gb4->setLongitude(8.25279);
         $gb4->setActive(true);
@@ -172,7 +175,7 @@ class GeobitInterfaceTest extends KernelTestCase {
         $anotherUser = "4545";
                 
         $gInterface = GeobitInterface::create(
-                $this->em->getRepository('MallappGeobitsBundle:Geobit'),
+                $this->em->getRepository('MallappGeobitsBundle:GeobitEntity'),
                 $this->em->getRepository('MallappGeobitsBundle:UserRetrieval'),
                 $this->em
                 );
@@ -183,22 +186,22 @@ class GeobitInterfaceTest extends KernelTestCase {
                 
         // Create 4 Geobits within two grid parcels (2 and 2)
         
-        $gb1 = new Geobit(); // is in parcel 1 [46..47, 7..8]
+        $gb1 = new GeobitEntity(); // is in parcel 1 [46..47, 7..8]
         $gb1->setLatitude(46.81592)
             ->setLongitude(7.09579)
             ->setActive(true);
         
-        $gb2 = new Geobit(); // is in parcel 1 [46..47, 7..8]
+        $gb2 = new GeobitEntity(); // is in parcel 1 [46..47, 7..8]
         $gb2->setLatitude(46.8387)
             ->setLongitude(7.00584)
             ->setActive(true);
         
-        $gb3 = new Geobit(); // is in parcel 2 [46..47, 6..7]
+        $gb3 = new GeobitEntity(); // is in parcel 2 [46..47, 6..7]
         $gb3->setLatitude(46.83553)
             ->setLongitude(6.88224)
             ->setActive(true);
         
-        $gb4 = new Geobit(); // is in parcel 2 [46..47, 6..7]
+        $gb4 = new GeobitEntity(); // is in parcel 2 [46..47, 6..7]
         $gb4->setLatitude(46.82167)
             ->setLongitude(6.85512)
             ->setActive(true);
@@ -273,7 +276,7 @@ class GeobitInterfaceTest extends KernelTestCase {
     {
         parent::tearDown();
 
-        $this->em->createQuery('DELETE FROM MallappGeobitsBundle:Geobit')->execute();
+        $this->em->createQuery('DELETE FROM MallappGeobitsBundle:GeobitEntity')->execute();
         $this->em->createQuery('DELETE FROM MallappGeobitsBundle:UserRetrieval')->execute();
         $this->em->close();
         $this->em = null; // avoid memory leaks

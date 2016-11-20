@@ -31,19 +31,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Geobit
  *
- * @ORM\Table(name="geobit")
- * @ORM\Entity(repositoryClass="Mallapp\GeobitsBundle\Repository\GeobitRepository")
+ * @ORM\MappedSuperclass
  */
 class Geobit
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var float
@@ -91,15 +82,6 @@ class Geobit
 
     }
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set latitude
