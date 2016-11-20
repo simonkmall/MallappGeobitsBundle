@@ -18,7 +18,11 @@ Additionally, the bundle provides a subclass called GeobitEntity, which extends 
 The GeobitEntity additionally contains an optional (i.e. nullable) field:
 - Comment
 
-If those fields are not enough, you have to create your own subclass extending the Geobit Mapped Superclass. Just use the GeobitEntity as a starting point and customize as you need by following the doctrine standards:
+If those fields are not enough, you have to create your own subclass extending the Geobit Mapped Superclass.
+
+You have to options to do so:
+- Create your own class. Just use the GeobitEntity as a starting point and customize as you need. YOU NEED TO SPECIFY YOUR OWN TABLE NAME (instead of "geobit"). Doctrine will still create the geobit table, but it will not be used.
+- Or, override the GeobitEntity class. You can again use the class as your starting point, and don't have to specify your own table name.
 
 ```
 use Doctrine\ORM\Mapping as ORM;
