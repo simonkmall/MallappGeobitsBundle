@@ -59,10 +59,12 @@ class GeobitEntity extends Geobit
         
         $returnArray = Array();
         
-        $returnArray['id'] = $this->id;
-        $returnArray['latitude'] = $this->latitude;
-        $returnArray['longitude'] = $this->longitude;
-        $returnArray['comment'] = $this->comment;
+        $returnArray['id'] = $this->getId();
+        $returnArray['la'] = $this->getLatitude();
+        $returnArray['lo'] = $this->getLongitude();
+        $returnArray['c'] = $this->getComment();
+        
+        return $returnArray;
 
     }
 
