@@ -209,3 +209,4 @@ class Geobit
         return $this->active;
     }
 }
+
