@@ -26,6 +26,7 @@
 
 namespace Mallapp\GeobitsBundle\Entity;
 
+use Mallapp\GeobitsBundle\Model\Geocoding\SimpleLocation;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,32 +49,74 @@ class GeobitEntity extends Geobit
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="string", nullable=true)
+     * @ORM\Column(name="nickname", type="string", length=255, nullable=true)
+     */    
+    private $nickname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="countryCode", type="string", length=128, nullable=true)
+     */    
+    private $countryCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="administrativeArea", type="string", length=255, nullable=true)
+     */
+    private $administrativeArea;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=64, nullable=true)
+     */
+    private $postalCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="route", type="string", length=128, nullable=true)
+     */
+    private $route;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="formattedAddress", type="string", length=1024, nullable=true)
+     */
+    private $formattedAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="string", length=1024, nullable=true)
      */
     private $comment;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", nullable=true)
+     * @ORM\Column(name="type", type="string", length=64, nullable=true)
      */
     private $type;
 
 
-
-    public function getAsArray() {
+    public static function createFromSimpleLocation(SimpleLocation $loc) {
         
-        $returnArray = Array();
+        $geobit = new GeobitEntity();
         
-        $returnArray['id'] = $this->getId();
-        $returnArray['la'] = $this->getLatitude();
-        $returnArray['lo'] = $this->getLongitude();
-        $returnArray['c'] = $this->getComment();
-        
-        return $returnArray;
-
     }
 
+    
     /**
      * Get id
      *
@@ -113,5 +156,28 @@ class GeobitEntity extends Geobit
 
 
     
-}
 
+    /**
+     * Set type
+     *
+     * @param string $type
+     *
+     * @return GeobitEntity
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+}

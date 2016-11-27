@@ -26,6 +26,7 @@
 
 namespace Mallapp\GeobitsBundle\Entity;
 
+use Mallapp\GeobitsBundle\Model\Geocoding\SimpleLocation;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,33 +49,91 @@ class GeobitEntity extends Geobit
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="string", nullable=true)
+     * @ORM\Column(name="nickname", type="string", length=255, nullable=true)
+     */    
+    private $nickname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="countryCode", type="string", length=128, nullable=true)
+     */    
+    private $countryCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="administrativeArea", type="string", length=255, nullable=true)
+     */
+    private $administrativeArea;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=64, nullable=true)
+     */
+    private $postalCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="route", type="string", length=128, nullable=true)
+     */
+    private $route;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="formattedAddress", type="string", length=1024, nullable=true)
+     */
+    private $formattedAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="string", length=1024, nullable=true)
      */
     private $comment;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", nullable=true)
+     * @ORM\Column(name="type", type="string", length=64, nullable=true)
      */
     private $type;
 
 
-
-    public function getAsArray() {
+    public static function createFromSimpleLocation(SimpleLocation $loc) {
         
-        $returnArray = Array();
+        $geobit = new GeobitEntity();
         
-        $returnArray['id'] = $this->getId();
-        $returnArray['la'] = $this->getLatitude();
-        $returnArray['lo'] = $this->getLongitude();
-        $returnArray['c'] = $this->getComment();
-        $returnArray['t'] = $this->getType();
+        $now = new \DateTime;
         
-        return $returnArray;
-
+        $geobit->setAdministrativeArea($loc->administrativeArea)
+                ->setCity($loc->city)
+                ->setCountryCode($loc->countryCode)
+                ->setFormattedAddress($loc->formattedAddress)
+                ->setNickname($loc->nickname)
+                ->setPostalCode($loc->postalCode)
+                ->setRoute($loc->route)
+                ->setActive(true)
+                ->setChangedAt($now)
+                ->setGeneratedAt($now)
+                ->setLatitude($loc->latitude)
+                ->setLongitude($loc->longitude);
+        
+        return $geobit;
+        
     }
 
+    
     /**
      * Get id
      *
@@ -137,5 +196,173 @@ class GeobitEntity extends Geobit
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set nickname
+     *
+     * @param string $nickname
+     *
+     * @return GeobitEntity
+     */
+    public function setNickname($nickname)
+    {
+        $this->nickname = $nickname;
+
+        return $this;
+    }
+
+    /**
+     * Get nickname
+     *
+     * @return string
+     */
+    public function getNickname()
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * Set countryCode
+     *
+     * @param string $countryCode
+     *
+     * @return GeobitEntity
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * Get countryCode
+     *
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
+    }
+
+    /**
+     * Set administrativeArea
+     *
+     * @param string $administrativeArea
+     *
+     * @return GeobitEntity
+     */
+    public function setAdministrativeArea($administrativeArea)
+    {
+        $this->administrativeArea = $administrativeArea;
+
+        return $this;
+    }
+
+    /**
+     * Get administrativeArea
+     *
+     * @return string
+     */
+    public function getAdministrativeArea()
+    {
+        return $this->administrativeArea;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return GeobitEntity
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set postalCode
+     *
+     * @param string $postalCode
+     *
+     * @return GeobitEntity
+     */
+    public function setPostalCode($postalCode)
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    /**
+     * Get postalCode
+     *
+     * @return string
+     */
+    public function getPostalCode()
+    {
+        return $this->postalCode;
+    }
+
+    /**
+     * Set route
+     *
+     * @param string $route
+     *
+     * @return GeobitEntity
+     */
+    public function setRoute($route)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route
+     *
+     * @return string
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * Set formattedAddress
+     *
+     * @param string $formattedAddress
+     *
+     * @return GeobitEntity
+     */
+    public function setFormattedAddress($formattedAddress)
+    {
+        $this->formattedAddress = $formattedAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get formattedAddress
+     *
+     * @return string
+     */
+    public function getFormattedAddress()
+    {
+        return $this->formattedAddress;
     }
 }

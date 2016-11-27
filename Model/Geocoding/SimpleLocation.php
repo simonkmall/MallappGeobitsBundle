@@ -24,24 +24,31 @@
  * THE SOFTWARE.
  */
 
-
-namespace Mallapp\GeobitsBundle\Tests\Model;
-
-use Mallapp\GeobitsBundle\Model\NameGenerator;
+namespace Mallapp\GeobitsBundle\Model\Geocoding;
 
 /**
- * Description of NameGeneratorTest
+ * Description of SimpleLocation
  *
  * @author Simon Mall
  */
-class NameGeneratorTest extends \PHPUnit_Framework_TestCase {
-
-    public function testXY() {
-        
-        $name = NameGenerator::createName(47.385777, 8.500454);
-        
-        $this->assertEquals($name, "Baslerstrasse Zürich - Kreis 9 (CH)");
-
-    }
-
+class SimpleLocation {
+    
+    public $latitude;
+    
+    public $longitude;
+    
+    public $nickname;
+    
+    public $countryCode;
+    
+    public $administrativeArea;
+    
+    public $city;
+    
+    public $postalCode;
+    
+    public $route;
+    
+    public $formattedAddress;
+    
 }

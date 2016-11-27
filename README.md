@@ -107,7 +107,7 @@ class GeobitEntity extends Geobit
 
 Note that you need to implement the `getAsArray` function, it is used to convert the object into a json object transmitted via the API.
 
-# Usage
+# Usage of the GeobitInterface
 
 Use the `GeobitInterface` class to access the bundles functions. Create the interface class in your controller:
 
@@ -130,4 +130,29 @@ After creation, you can use the interface functions. The most important ones are
 
 IMPORTANT: after every persistence call (e.g. put, setActive, ackGeobitRetrieval), you need to call `flushDB()` to persist the changes in the database. This allows you to first perform all the changes and then persist everything in one step.
 
+# Usage of the ReverseGeocodingApi
 
+Use the API class to call the static function:
+
+```
+$loc = ReverseGeocodingApi::getLocationFromCoordinate(47.385777, 8.500454);
+```
+
+Your return value in `$loc` contains a `SimpleLocation` object with the following fields:
+
+```
+public $latitude;
+public $longitude;
+public $nickname;
+public $countryCode;
+public $administrativeArea;
+public $city;
+public $postalCode;
+public $route;
+public $formattedAddress;
+```
+
+If you like, create a fully initialized `GeobitEntity` object by calling the factory function:
+```
+$geobit = GeobitEntity::createFromSimpleLocation($loc);
+```
