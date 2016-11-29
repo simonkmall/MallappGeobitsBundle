@@ -26,12 +26,10 @@
 
 namespace Mallapp\GeobitsBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Geobit
  *
- * @ORM\MappedSuperclass
  */
 class Geobit
 {
@@ -39,48 +37,32 @@ class Geobit
     /**
      * @var float
      *
-     * @ORM\Column(name="latitude", type="float")
      */
     private $latitude;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="longitude", type="float")
      */
     private $longitude;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="generatedAt", type="datetime")
      */
     private $generatedAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="changedAt", type="datetime")
      */
     private $changedAt;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="active", type="boolean")
      */
     private $active;
 
-
-    public function getAsArray() {
-        
-        $returnArray = Array();
-        
-        $returnArray['id'] = $this->id;
-        $returnArray['latitude'] = $this->latitude;
-        $returnArray['longitude'] = $this->longitude;
-
-    }
 
 
     /**

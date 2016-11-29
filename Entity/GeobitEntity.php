@@ -27,85 +27,70 @@
 namespace Mallapp\GeobitsBundle\Entity;
 
 use Mallapp\GeobitsBundle\Model\Geocoding\SimpleLocation;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * GeobitEntity
  *
- * @ORM\Table(name="geobit")
- * @ORM\Entity(repositoryClass="Mallapp\GeobitsBundle\Repository\GeobitRepository")
  */
 class GeobitEntity extends Geobit
 {
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nickname", type="string", length=255, nullable=true)
      */    
     private $nickname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="countryCode", type="string", length=128, nullable=true)
      */    
     private $countryCode;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="administrativeArea", type="string", length=255, nullable=true)
      */
     private $administrativeArea;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="city", type="string", length=255, nullable=true)
      */
     private $city;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="postalCode", type="string", length=64, nullable=true)
      */
     private $postalCode;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="route", type="string", length=128, nullable=true)
      */
     private $route;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="formattedAddress", type="string", length=1024, nullable=true)
      */
     private $formattedAddress;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="comment", type="string", length=1024, nullable=true)
      */
     private $comment;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=64, nullable=true)
      */
     private $type;
 

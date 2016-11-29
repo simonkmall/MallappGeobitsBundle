@@ -1,0 +1,80 @@
+Mallapp\GeobitsBundle\Entity\GeobitEntity:
+    type: entity
+    table: geobit
+    repositoryClass: Mallapp\GeobitsBundle\Repository\GeobitRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        nickname:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        countryCode:
+            type: string
+            scale: 0
+            length: 128
+            unique: false
+            nullable: true
+            precision: 0
+        administrativeArea:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        city:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+        postalCode:
+            type: string
+            scale: 0
+            length: 64
+            unique: false
+            nullable: true
+            precision: 0
+        route:
+            type: string
+            scale: 0
+            length: 128
+            unique: false
+            nullable: true
+            precision: 0
+        formattedAddress:
+            type: string
+            scale: 0
+            length: 1024
+            unique: false
+            nullable: true
+            precision: 0
+        comment:
+            type: string
+            scale: 0
+            length: 1024
+            unique: false
+            nullable: true
+            precision: 0
+        type:
+            type: string
+            scale: 0
+            length: 64
+            unique: false
+            nullable: true
+            precision: 0
+    lifecycleCallbacks: {  }
