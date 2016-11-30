@@ -48,7 +48,7 @@ class UserRetrieval
      /**
      * @var string
      *
-     * @ORM\Column(name="parce_lid", type="string", length=255, unique=true)
+     * @ORM\Column(name="parcel_id", type="string", length=255, unique=false)
      */
     private $parcelId;   
 
