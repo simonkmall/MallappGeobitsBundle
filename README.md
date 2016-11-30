@@ -4,25 +4,32 @@
 - Register the bundle in your AppKernel.php (see symfony docs for details)
 - Create a custom Geobit class, if needed (details see below)
 
-The bundle comes with a Geobit class, which is a Doctrine "Mapped Superclass" and not an entity itself.
+The bundle comes with two Doctrine "Mapped Superclasses": Geobit and GeobitPlus. Additionally, it comes with a GeobitEntity class, which extends the Geobitplus mapped superclass and is a doctrine entity itself.
 
 The Geobit superclass contains the following fields:
 - Latitude
 - Longitude
-- Generation DateTime (called generatedAt)
-- Last Change DateTime (called changedAt)
-- Active flag (boolean)
+- generatedAt
+- changedAt
+- active (boolean flag)
 
-Additionally, the bundle provides a subclass called GeobitEntity, which extends the Mapped Superclass and is a doctrine entity.
+These fileds are necessary for the geobitInterface classes to work.
 
-The GeobitEntity additionally contains an optional (i.e. nullable) field:
-- Comment
+The GeobitPlus superclass extends the Geobit superclass by the following fields:
+- nickname
+- countryCode
+- administrativeArea
+- city
+- postalCode
+- route
+- formattedAddress
+- comment
+- type
 
-If those fields are not enough, you have to create your own subclass extending the Geobit Mapped Superclass.
+These fileds are typically used with the ReverseGeocodingApi (see below) to store geocoding information.
 
-You have to options to do so:
-- Create your own class. Just use the GeobitEntity as a starting point and customize as you need. YOU NEED TO SPECIFY YOUR OWN TABLE NAME (instead of "geobit"). Doctrine will still create the geobit table, but it will not be used.
-- Or, override the GeobitEntity class. You can again use the class as your starting point, and don't have to specify your own table name.
+To store the data in a DB via doctrine, a subclass must be created which extends one of the superclasses above. The bundle provides a subclass called GeobitEntity, which extends the Mapped Superclass GeobitPlus. If it suits your needs, you can use it as is.
+Otherwise, just create your own entity class based on the GeobitEntity template. Note that in this case, the GeobitEntity class still creates its own DB table, which is then never used. If you want, you can just delete it from your DB or keep it there (empty).
 
 ```
 use Doctrine\ORM\Mapping as ORM;
@@ -33,7 +40,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="geobit")
  * @ORM\Entity(repositoryClass="Mallapp\GeobitsBundle\Repository\GeobitRepository")
  */
-class GeobitEntity extends Geobit
+class GeobitEntity extends GeobitPlus
 {
     /**
      * @var int
@@ -44,68 +51,19 @@ class GeobitEntity extends Geobit
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="comment", type="string", nullable=true)
-     */
-    private $comment;
-
-
-    public function getAsArray() {
-        
-        $returnArray = Array();
-        
-        $returnArray['id'] = $this->id;
-        $returnArray['latitude'] = $this->latitude;
-        $returnArray['longitude'] = $this->longitude;
-        $returnArray['comment'] = $this->comment;
-
-    }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
         return $this->id;
     }
-    
-    
-    /**
-     * Set comment
-     *
-     * @param string $comment
-     *
-     * @return Geobit
-     */
-    public function setComment($comment)
-    {
-        $this->comment = $comment;
-        
-        $this->changedAt = new \DateTime();
-
-        return $this;
-    }
-
-    /**
-     * Get comment
-     *
-     * @return string
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
-
-    
 }
 ```
 
-Note that you need to implement the `getAsArray` function, it is used to convert the object into a json object transmitted via the API.
 
 # Usage of the GeobitInterface
 

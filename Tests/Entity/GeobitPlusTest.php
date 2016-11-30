@@ -24,35 +24,43 @@
  * THE SOFTWARE.
  */
 
-namespace Mallapp\GeobitsBundle\Entity;
+namespace Mallapp\GeobitsBundle\Tests\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use Mallapp\GeobitsBundle\Entity\GeobitPlus;
 
 /**
- * GeobitEntity
+ * Description of GeobitPlusTest
  *
- * @ORM\Table(name="geobit")
- * @ORM\Entity(repositoryClass="Mallapp\GeobitsBundle\Repository\GeobitRepository")
+ * @author Simon Mall
  */
-class GeobitEntity extends GeobitPlus
-{
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+class GeobitPlusTest extends \PHPUnit_Framework_TestCase {
 
 
-    /**
-     * Get id
-     *
-     * @return integer
+    /*
+     * Smoke test to verify that we did not override the setter methods
+     * and thereby accidentally remove the touch() function.
+     * The touch() function is necessary to set the changedAt field,
+     * which in turn is necessary to correctly asses which geobits
+     * are cached and which aren't.
      */
-    public function getId()
-    {
-        return $this->id;
+    public function testCreationAndTouchFunction() {
+        
+        $dateString = "2005-08-15T15:00:00+0000";
+        
+        $gb = new GeobitPlus();
+        
+        // Set the time
+        $gb->setChangedAt(\DateTime::createFromFormat(\DateTime::ISO8601, $dateString));
+        
+        // Check if set correctly
+        $this->assertEquals($dateString, $gb->getChangedAt()->format(\DateTime::ISO8601));
+        
+        // Change any field
+        $gb->setCity("Testcity");
+        
+        // Check if updated, i.e. not to the previous value anymore
+        $this->assertNotEquals($dateString, $gb->getChangedAt()->format(\DateTime::ISO8601));
+
     }
+
 }

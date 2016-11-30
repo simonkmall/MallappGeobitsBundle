@@ -26,6 +26,8 @@
 
 namespace Mallapp\GeobitsBundle\Entity;
 
+use Mallapp\GeobitsBundle\Model\Geocoding\SimpleLocation;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -72,14 +74,26 @@ class Geobit
     private $active;
 
 
-    public function getAsArray() {
+    public static function createFromSimpleLocation(SimpleLocation $loc) {
         
-        $returnArray = Array();
+        $geobit = new Geobit();
         
-        $returnArray['id'] = $this->id;
-        $returnArray['latitude'] = $this->latitude;
-        $returnArray['longitude'] = $this->longitude;
-
+        $now = new \DateTime;
+        
+        $geobit->setActive(true)
+                ->setChangedAt($now)
+                ->setGeneratedAt($now)
+                ->setLatitude($loc->latitude)
+                ->setLongitude($loc->longitude);
+        
+        return $geobit;
+        
+    }
+    
+    public function touch() {
+        
+        $this->setChangedAt(new \DateTime());
+        
     }
 
 
@@ -94,7 +108,7 @@ class Geobit
     {
         $this->latitude = $latitude;
         
-        $this->changedAt = new \DateTime();
+        $this->touch();
 
         return $this;
     }
@@ -119,9 +133,9 @@ class Geobit
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
-        
-        $this->changedAt = new \DateTime();
 
+        $this->touch();
+                
         return $this;
     }
 
@@ -193,16 +207,16 @@ class Geobit
     public function setActive($active)
     {
         $this->active = $active;
-        
-        $this->changedAt = new \DateTime();
 
+        $this->touch();
+        
         return $this;
     }
 
     /**
      * Get active
      *
-     * @return bool
+     * @return boolean
      */
     public function getActive()
     {

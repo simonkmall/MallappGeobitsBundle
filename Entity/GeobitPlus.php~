@@ -33,52 +33,87 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\MappedSuperclass
  */
-class Geobit
+class GeobitPlus extends Geobit
 {
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="latitude", type="float")
-     */
-    private $latitude;
+     * @ORM\Column(name="nickname", type="string", length=255, nullable=true)
+     */    
+    private $nickname;
 
     /**
-     * @var float
+     * @var string
      *
-     * @ORM\Column(name="longitude", type="float")
+     * @ORM\Column(name="countryCode", type="string", length=128, nullable=true)
+     */    
+    private $countryCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="administrativeArea", type="string", length=255, nullable=true)
      */
-    private $longitude;
+    private $administrativeArea;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="postalCode", type="string", length=64, nullable=true)
+     */
+    private $postalCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="route", type="string", length=128, nullable=true)
+     */
+    private $route;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="formattedAddress", type="string", length=1024, nullable=true)
+     */
+    private $formattedAddress;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="generatedAt", type="datetime")
+     * @ORM\Column(name="comment", type="string", length=1024, nullable=true)
      */
-    private $generatedAt;
+    private $comment;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="changedAt", type="datetime")
+     * @ORM\Column(name="type", type="string", length=64, nullable=true)
      */
-    private $changedAt;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="active", type="boolean")
-     */
-    private $active;
+    private $type;
 
 
     public static function createFromSimpleLocation(SimpleLocation $loc) {
         
-        $geobit = new Geobit();
+        $geobit = new GeobitPlus();
         
         $now = new \DateTime;
         
-        $geobit->setActive(true)
+        $geobit->setAdministrativeArea($loc->administrativeArea)
+                ->setCity($loc->city)
+                ->setCountryCode($loc->countryCode)
+                ->setFormattedAddress($loc->formattedAddress)
+                ->setNickname($loc->nickname)
+                ->setPostalCode($loc->postalCode)
+                ->setRoute($loc->route)
+                ->setActive(true)
                 ->setChangedAt($now)
                 ->setGeneratedAt($now)
                 ->setLatitude($loc->latitude)
@@ -87,7 +122,6 @@ class Geobit
         return $geobit;
         
     }
-
-  
     
+
 }
